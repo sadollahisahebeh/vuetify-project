@@ -1,19 +1,21 @@
 <template>
-  <div class="bg-blue-darken-4">
+  <div class="bg-blue-darken-4 mt-5">
     <v-container>
-      <div class="navbar">
+      <div class="navbar" dir="rtl">
+        <div class="parent-logo">
+          <v-img src="/logoNav.png" alt="لوگو علمیه" class="logoNav">
+          </v-img>
+          <h1 class="title-nav">حوزه علمیه خواهران</h1>
+
+        </div>
         <div>
           <ul class="list-nav d-flex flex-wrap ga-8 ">
             <li v-for="(item,index) in menu" :key="index">
-              <router-link to="/" class="link-menu">{{ item.title }}</router-link>
+              <router-link :to="{path:item.router}" class="link-menu">{{ item.names }}</router-link>
             </li>
           </ul>
         </div>
-        <div class="parent-logo">
-          <h1 class="title-nav">حوزه علمیه خواهران</h1>
-          <v-img src="/logoNav.png" alt="لوگو علمیه" class="logoNav">
-          </v-img>
-        </div>
+
       </div>
       <div class="response-nav" dir="rtl">
         <div class="d-flex ">
@@ -31,7 +33,7 @@
   <div class="showMenu animate__animated animate__fadeInDown" v-if="showMenu">
     <ul class="list-response-nav">
       <li v-for="(item,index) in menu" :key="index">
-        <router-link to="/" class="link-response-menu">{{ item.title }}</router-link>
+        <router-link :to="{path:item.router}" class="link-response-menu">{{ item.names }}</router-link>
       </li>
     </ul>
   </div>
@@ -45,28 +47,36 @@
   const menu = [
 
     {
-      title: "صفحه اصلی"
+      names: "صفحه اصلی",
+      router: '/'
     },
     {
-      title: " حوزه علمیه"
+      names: " حوزه علمیه",
+      router: '/'
     },
     {
-      title: " معاونت پژوهشی"
+      names: " معاونت پژوهشی",
+      router: '/'
     },
     {
-      title: " معاونت آموزش"
+      names: " معاونت آموزش",
+      router: '/Education'
     },
     {
-      title: " چند رسانه ای"
+      names: "   لیست آموزش",
+      router: '/EducationList'
     },
     {
-      title: " تماس با ما"
+      names: " تماس با ما",
+      router: '/ContactMe'
     },
     {
-      title: " اخبار"
+      names: " اخبار",
+      router: '/News'
     },
     {
-      title: " درباره ما"
+      names: " درباره ما",
+      router: '/AboutMe'
     },
   ]
   const showMenu = ref(false);

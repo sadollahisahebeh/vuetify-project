@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <home-header class="header" />
+    <home-header />
     <router-view />
     <home-footer />
   </v-app>
@@ -12,7 +12,5 @@
 </script>
 
 <style scoped>
-.header{
-  margin-top: 28px;
-}
+
 </style>
