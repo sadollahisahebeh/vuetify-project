@@ -31,21 +31,21 @@ const routes = [
     ],
   },
   {
-    path: '/ContactMe',
+    path: '/contact-us',
     component: () => import('@/layouts/default/Default.vue'),
     children: [
       {
         path: '',
-        name: 'ContactMe',
+        name: 'ContactUs',
         // route level code-splitting
         // this generates a separate chunk (Home-[hash].js) for this route
         // which is lazy-loaded when the route is visited.
-        component: () => import('@/views/ContactMe.vue'),
+        component: () => import('@/views/ContactUs.vue'),
       },
     ],
   },
   {
-    path: '/Education',
+    path: '/Education/:id',
     component: () => import('@/layouts/default/Default.vue'),
     children: [
       {
@@ -59,7 +59,7 @@ const routes = [
     ],
   },
   {
-    path: '/EducationList',
+    path: '/news/:id',
     component: () => import('@/layouts/default/Default.vue'),
     children: [
       {

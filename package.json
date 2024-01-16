@@ -9,13 +9,16 @@
   "dependencies": {
     "@mdi/font": "7.0.96",
     "animate.css": "^4.1.1",
+    "axios": "^1.6.5",
     "iransans-fontface": "^0.1.1",
+    "jalali-moment": "^3.3.11",
     "pinia": "^2.0.23",
     "roboto-fontface": "*",
     "swiper": "^11.0.5",
     "vue": "^3.2.0",
     "vue-router": "^4.0.0",
-    "vuetify": "^3.0.0"
+    "vuetify": "^3.0.0",
+    "vuex": "^4.0.2"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.0.0",

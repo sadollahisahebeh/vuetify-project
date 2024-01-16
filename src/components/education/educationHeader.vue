@@ -1,85 +1,234 @@
 <template>
   <v-container>
     <div>
-      <div class="header" dir="rtl">
-        <span>صفحه اصلی </span>
-        <span>></span>
-        <span> آموزش </span>
-        <span>></span>
-        <span>صفحه آموزش </span>
+      <div class="breadcrumb">
+        <v-icon class="mt-4">mdi-home</v-icon>
+        <v-breadcrumbs :items="items">
+          <template v-slot:divider>
+            <v-icon icon="mdi-chevron-left"></v-icon>
+          </template>
+        </v-breadcrumbs>
       </div>
-      <div class="bg-white rounded-lg mt-12 education-main">
-        <v-container>
-          <v-row>
-            <v-col cols="12" md="6">
-              <v-img src="/education/educationimg.png"></v-img>
-            </v-col>
-            <v-col cols="12" md="6">
-              <div dir="rtl">
-                <h1>با هم برای آرمانِ امام ، نشست هم اندیشی پیرامون وحدت حوزه و دانشگاه</h1>
-                <div class="bg-grey-lighten-3 rounded-lg mt-5 ">
-                  <v-container>
-                    <p dir="rtl">ایشان شرط دوم رقابت سالم در انتخابات را، حضور همراه با بصیرت و با فکرِ مردم و انتخاب
-                      افراد صالح
-                      دانستند و افزودند: باید افرادی را برگزید که بعد اشور را به دشمن نمی فروشند، مصالح ملی را به دلیل
-                      رودربایستی زیر پا نمی گذارند.</p>
-                  </v-container>
-
+      <div class="education-main" v-if="showdata">
+        <v-row>
+          <v-col cols="12" md="7">
+            <div class="description-img-response">
+              <div class="d-flex">
+                <div class="cycle-response"
+                  style="width: 10px;height: 10px;background-color: #8dd4da; border-radius: 50%;margin-top: 10px;">
                 </div>
-                <div class="d-flex mt-10 date">
-                  <div>
-                    <v-icon color="#095195">mdi-calendar</v-icon>
-                    <span> 12شهریور1401</span>
-                  </div>
-                  <div>
-                    <v-icon color="#095195">mdi-eye</v-icon>
-                    <span> بازدید 23457</span>
-                  </div>
-                  <div>
-                    <v-icon color="#095195">mdi-account</v-icon>
-                    <span> علیرضا</span>
-                  </div>
-                </div>
+                <span class="description-img">این متن فاقد اهمیت است و جهت پر کردن فضای بالای عنوان است.
+                </span>
               </div>
-            </v-col>
-          </v-row>
-        </v-container>
+              <h1 >
+                {{ showdata.title }}
+              </h1>
+              <div class="bg-grey-lighten-3 rounded-lg mt-5 pa-3 ">
+                <p>
+                  {{showdata.summary}}
+                </p>
+              </div>
+              <div class="review">
+                <review class="icon-size" icon-class="ml-2" color="#095195" icon="mdi-calendar" size="large"
+                  label="12شهریور 1402" />
+                <review class="icon-size" icon-class="ml-2" color="#095195" icon="mdi-eye" size="large"
+                  label="بازدید 1402" />
+                <review class="icon-size" icon-class="ml-2" color="#095195" icon="mdi-account" size="large"
+                  label=" علیرضالو" />
+              </div>
+              <div class="review-response">
+                <review class="icon-size" icon-class="ml-2" color="#7a7a7a" icon="mdi-eye" size="large"
+                  label="بازدید 1402" />
+                <review class="icon-size" icon-class="ml-2" color="#7a7a7a" icon="mdi-account" size="large"
+                  label=" علیرضالو" />
+                <review class="icon-size" icon-class="ml-2" color="#7a7a7a" size="large" label="12شهریور 1402" />
+              </div>
+            </div>
+          </v-col>
+          <v-col cols="12" md="5" order="first" order-md="2">
+            <div>
+              <v-img :src="showdata.image_url"></v-img>
+            </div>
+          </v-col>
+        </v-row>
       </div>
     </div>
   </v-container>
 </template>
 
 <script setup>
+  import review from '../review.vue';
+  defineProps({
+    showdata: Object
+  })
+  const items = [{
+      title: 'صفحه اصلی',
+      disabled: false,
+      href: '/',
+    },
+    {
+      title: 'اخبار',
+      disabled: true,
+    },
+  ]
+
 </script>
 
 <style scoped>
-  .header {
+  .breadcrumb {
     display: flex;
-    gap: 8px;
-    margin-top: 50px;
+    color: #095195;
+    font-size: 13px;
+    font-weight: 700;
   }
 
-  .header span {
-    font-size: 12px;
-    color: #095195;
+  .education-main {
+    display: flex;
+    background-color: #fff;
+    padding: 16px;
+    border-radius: 15px;
+
   }
 
   .education-main h1 {
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 700;
     color: #095195;
-    margin-top: 50px;
+    margin-top: 15px;
   }
 
   .education-main p {
     font-size: 13px;
     line-height: 29px;
+    text-align: justify;
   }
 
-  .date span {
+  .education-main {
+    margin-top: 50px;
+  }
+
+  .description-img {
+    display: none;
+  }
+
+  .icon-header {
+    color: #095195;
+  }
+
+  .icon-header-responsive {
+    color: #095195;
+  }
+
+  .btn-report {
+    display: none;
+  }
+
+  .date {
+    display: flex;
+  }
+
+  a {
+    text-decoration: none;
     font-size: 13px;
-    margin-left: 20px;
-    color: #757575;
+  }
+
+  .description-img-response {
+    padding: 16px;
+
+  }
+
+  .report {
+    display: none;
+  }
+
+  .link-home {
+    font-size: 12px;
+    font-weight: 500;
+    color: #095195;
+  }
+
+  .review {
+    display: flex;
+    gap: 30px;
+    margin-top: 25px;
+  }
+
+  .icon-size {
+    font-size: 12px;
+  }
+
+  .cycle-response {
+    display: none;
+  }
+
+  .review-response {
+    display: none;
+  }
+
+  @media screen and (max-width:960px) {
+    .header {
+      margin-top: 0;
+    }
+
+    .education-main {
+      margin-top: 20px;
+    }
+
+    .description-img {
+      display: flex;
+      font-size: 8px;
+      margin-top: 10px;
+      margin-right: 4px;
+    }
+
+    .education-main h1 {
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    .date span {
+      font-size: 9px;
+      margin-left: 10px;
+    }
+
+    .icon-header {
+      color: #757575;
+      width: 5px;
+    }
+
+    .icon-header-responsive {
+      display: none;
+
+    }
+
+    .date {
+      display: flex;
+      flex-direction: row-reverse;
+    }
+
+    .cycle {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background-color: blue;
+    }
+
+    .description-img-response {
+      padding: 0;
+    }
+
+    .cycle-response {
+      display: flex;
+    }
+
+    .review-response {
+      display: flex;
+      margin-top: 20px;
+    }
+
+    .review {
+      display: none;
+    }
   }
 
 </style>

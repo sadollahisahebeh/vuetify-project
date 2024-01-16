@@ -1,7 +1,10 @@
 <template>
-  <div class="menues " dir="rtl">
+  <div class="menues">
     <div class="menu">
-      <h1>لینک های مفید</h1>
+      <div class="d-flex">
+        <h1>لینک های </h1>
+      <h2 class="mr-2">مفید</h2>
+      </div>
       <ul>
         <li v-for="(item,index) in useful" :key="index">
           <router-link to="/">{{ item.list }}</router-link>
@@ -9,7 +12,10 @@
       </ul>
     </div>
     <div class="menu">
-      <h1> خدمات ما </h1>
+      <div class="d-flex">
+        <h1> خدمات </h1>
+      <h2 class="mr-2">ما</h2>
+      </div>
       <ul>
         <li v-for="(item,index) in services" :key="index">
           <router-link to="/">{{ item.list }}</router-link>
@@ -71,6 +77,19 @@
     font-size: 14px;
     font-weight: 700;
     color: #7a7a7a;
+    padding-bottom: 4px;
+    border-bottom: 2px solid #095195;
   }
+  .menu h2 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #7a7a7a;
+    padding-bottom: 4px;
+    border-bottom: 2px solid #095195;
+  }
+  .menu h2{
+    border-bottom: 2px solid #1BA4AA;
+  }
+  
 
 </style>
