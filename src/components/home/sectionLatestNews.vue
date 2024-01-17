@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <div class="section-latest-news" v-for="item in getlatestnews.slice(0,4)" :key="item">
+    <div  class="section-latest-news" v-for="item in getlatestnews" :key="item">
         <v-row>
           <div class="show-latest d-flex ga-2 pa-2" >
           <v-col cols="12" md="4" sm="6">
@@ -21,11 +21,11 @@
               <div class="d-flex justify-space-between mt-4">
                 <div class="d-flex mt-2">
                   <review class="responsive-review" color="#095195" icon="mdi-calendar" size="large" icon-class="ml-2"
-                    label="14شهریور 1402" />
+                  :label="changeDateshamsi`(item.published_at)`"/>
                   <review class="responsive-review" color="#095195" icon="mdi-eye" size="large" icon-class="ml-2 mr-2"
-                    label=" 234بازدید" />
+                  :label="item.views_count + ` بازدید`" />
                   <review class="responsive-review" color="#095195" icon="mdi-account" size="large"
-                    icon-class="ml-2 mr-2" label=" علیرضا" />
+                    icon-class="ml-2 mr-2"   :label="item.user.name" />
                 </div>
                 <div class="more-information">
                   <router-link :to="`/Education/${item.id}`" class="btn-information">
@@ -45,17 +45,23 @@
 <script setup>
 import {computed } from 'vue';
 import { useStore } from 'vuex';
+import {changeDateshamsi}  from '@/assets/moment.js'
+import review from '../review.vue';
+import responsivelatestNews from './responsivelatestNews.vue';
+ 
 const store = useStore();
 store.dispatch('getLatestNewsFromserver')
 const getlatestnews = computed(()=>{
   return store.getters.getlatestNews
   })
 
-import review from '../review.vue';
-import responsivelatestNews from './responsivelatestNews.vue';
- 
-  
- 
+
+  const p = defineProps({
+    news:Object
+  })
+setTimeout(()=>{
+console.log(p.news);
+},2000)
 </script>
 <style scoped>
 a{

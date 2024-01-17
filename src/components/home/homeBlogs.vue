@@ -22,8 +22,8 @@
                 <p class="text-blog">{{ item.summary }}</p>
                 <div class="d-flex justify-space-between mt-8">
                   <span>{{ item.views_count + `بازدید` }}</span>
-                 <div v-if="data">
-                  <router-link :to="`/news/${item.id}`" class="blog-link">ادامه مطلب
+                 <div v-if="getdetailblog">
+                  <router-link :to="`/DetailBlog/category?category_id=${item.id}`" class="blog-link">ادامه مطلب
                     <v-icon>mdi-arrow-left</v-icon>
                   </router-link>
                  </div>
@@ -47,14 +47,10 @@ store.dispatch('getarticlefromserver');
 const getarticle = computed(()=>{
   return store.getters.getarticle
 })
-import axios from 'axios';
-import { ref } from 'vue';
-import { useRoute } from 'vue-router';
-const route =useRoute();
-const data = ref([])
-axios.get(`/news`).then((res)=>{
-   data.value = res.data.data.news
-}).catch()
+store.dispatch('getdetailblogfromserver',{num:1})
+const getdetailblog = computed(()=>{
+  return store.getters.getdetailblog
+})
 </script>
 
 <style scoped>

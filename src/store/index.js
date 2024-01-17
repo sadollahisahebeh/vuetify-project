@@ -21,6 +21,7 @@ const store = createStore({
       link:[],
       datasetting:[],
       article:[],
+      detailblog:[]
     }
   },
   getters:{
@@ -56,6 +57,9 @@ return state.category
     },
     getarticle(state){
       return state.article
+    },
+    getdetailblog(state){
+      return state.detailblog
     }
 
   },
@@ -92,6 +96,9 @@ state.news = newNews
     },
     setarticle(state,newarticle){
       state.article=newarticle
+    },
+    setdetailblog(state,newdetail){
+      state.detailblog = newdetail
     }
 
   },
@@ -112,8 +119,8 @@ console.log(res.data.data.news);
 
       })
     },
-    async getLatestNewsFromserver({commit}){
-   await  axios.get('news/recent').then((res)=>{
+    async getLatestNewsFromserver({commit},page){
+   await  axios.get(`news/recent?page=${page}`).then((res)=>{
 commit('setlatestNews',res.data.data.news)
       }).catch(()=>{
 
@@ -140,8 +147,13 @@ commit('setmostvisited',res.data.data.news)
 
       })
     },
- async getcategoryFromServer({commit}, id){
-  await axios.get(`categories?category_id=${id}`).then((res)=>{
+ async getcategoryFromServer({commit}, num){
+  console.log('sdfghjkl');
+  await axios.get('categories',{
+    query: {
+      category_id:num
+    }
+  }).then((res)=>{
 commit('setcategory',res.data.data.categories)
   }).catch()
  },
@@ -158,6 +170,15 @@ commit('setdatasetting',res.data.data.settings)
  async getarticlefromserver({commit}){
   axios.get('articles/recent').then((res)=>{
 commit('setarticle',res.data.data.articles)
+  }).catch()
+ },
+ async getdetailblogfromserver({commit},num){
+  axios.get('articles', {
+    query: {
+      category_id:num
+    }
+  }).then((res)=>{
+commit('setdetailblog',res.data.data.articles)
   }).catch()
  }
 

@@ -14,7 +14,7 @@
         </span>
       </div>
     </div>
-    <section-latest-news :news="getlatestnews"/>
+    <section-latest-news/>
   </div>
 </template>
 

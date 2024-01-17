@@ -72,6 +72,20 @@ const routes = [
       },
     ],
   },
+  {
+    path: '/DetailBlog/category',
+    component: () => import('@/layouts/default/Default.vue'),
+    children: [
+      {
+        path: '',
+        name: 'detailblog',
+        // route level code-splitting
+        // this generates a separate chunk (Home-[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import('@/views/EducationList.vue'),
+      },
+    ],
+  },
 ]
 
 const router = createRouter({

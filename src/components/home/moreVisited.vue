@@ -16,8 +16,8 @@
       <v-container>
         <v-row>
           <v-col cols="3">
-            <div class="title-more-visited" >
-              <p>{{ item.category.name }}</p>
+            <div class="title-more-visited text-white" >
+              <router-link :to="`/news/${item.id}`">{{ item.category.name }}</router-link>
             </div>
           </v-col>
           <v-col cols="8">
@@ -49,6 +49,7 @@ import review from '../review.vue';
 import { useStore } from 'vuex';
 import moment from 'jalali-moment'
 import {changeDateshamsi}  from '@/assets/moment.js'
+import category from '../category.vue';
 import router from '@/router';
 const  store = useStore();
 store.dispatch('getvisitedfromserver');
@@ -82,7 +83,7 @@ a{
     margin-top: 5px;
   }
 
-  .all-news {
+  .all-news{
     font-size: 13px;
     font-weight: 400;
     color: #095195;

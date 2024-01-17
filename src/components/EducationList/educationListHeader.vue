@@ -8,20 +8,21 @@
           </template>
         </v-breadcrumbs>
       </div>
-     <v-row>
-      <v-col cols="6" md="3">
-        <button class="more-btn" @click="showMore = !showMore">بیشترین بازدید</button>
-      </v-col>
-      <v-col cols="6" md="3">
-        <button class="more-btn" @click="showOrdination = !showOrdination"> دسته بندی اخبار</button>
-      </v-col>
-     </v-row>
+      <v-row>
+        <v-col cols="6" md="3">
+          <button class="more-btn" @click="showMore = !showMore">بیشترین بازدید</button>
+        </v-col>
+        <v-col cols="6" md="3">
+          <button class="more-btn" @click="showOrdination = !showOrdination"> دسته بندی اخبار</button>
+        </v-col>
+      </v-row>
       <v-row>
         <v-col cols="12" md="8" order="last" order-md="first">
           <div class="title-more-review">پربازدیدترین ها</div>
-          <section-latest-news  class="bg-white rounded-lg mt-7" />
+          <section-latest-news class="bg-white rounded-lg mt-7" />
           <div class="pagination" dir="ltr">
-            <v-pagination :length="7" @input="onPageChange" color="#095195" prev-icon="mdi-menu-right" next-icon="mdi-menu-left">
+            <v-pagination :length="3" v-model="page" @update:model-value="changepage" color="#095195"
+              prev-icon="mdi-menu-right" next-icon="mdi-menu-left">
             </v-pagination>
           </div>
         </v-col>
@@ -31,18 +32,18 @@
               <input type="text" placeholder="جستجو کنید..." class="search">
               <v-icon color="#7d7d7d" class="icon-search">mdi-magnify</v-icon>
             </div>
-          <div class="category" :class="{showOrdination}">
-            <div class="title-latest">
-              <v-img class="latest-news" src="/background.svg" width="144px">
-                <h2 class="latest">دسته بندی اخبار</h2>
-              </v-img>
-            </div>
-            <div class="bg-white d-flex pa-4 justify-space-around mt-8 rounded-lg">
+            <div class="category" :class="{showOrdination}">
+              <div class="title-latest">
+                <v-img class="latest-news" src="/background.svg" width="144px">
+                  <h2 class="latest">دسته بندی اخبار</h2>
+                </v-img>
+              </div>
+              <div class="bg-white d-flex pa-4 justify-space-around mt-8 rounded-lg">
                 <div v-for="n in 2">
-                  <category/>
+                  <category />
                 </div>
+              </div>
             </div>
-          </div>
             <more-visited class="more-visited" :class="{showMore}" />
           </div>
         </v-col>
@@ -55,9 +56,23 @@
   import sectionLatestNews from '../home/sectionLatestNews.vue';
   import moreVisited from '../home/moreVisited.vue';
   import category from '../category.vue'
+  import axios from 'axios';
+  import router from '@/router';
+  import { useStore } from 'vuex';
+  const store = useStore();
+store.dispatch('getcategoryFromServer',{num:1})
   import {
     ref
   } from 'vue';
+  import {
+    useRoute
+  } from 'vue-router';
+  const route = useRoute();
+  const data = ref([])
+  axios.get(`/news/${route.params.id}`).then((res) => {
+    data.value = res.data.data.news
+  }).catch()
+
   const showMore = ref(false);
   const showOrdination = ref(false)
   const items = [{
@@ -70,16 +85,22 @@
       disabled: true,
     },
   ]
- 
-// import {computed } from 'vue';
-// import { useStore } from 'vuex';
-// const store = useStore();
-// store.dispatch('getcategoryFromServer')
-// const getcategory = computed(()=>{
-//   return store.getters.getcategory
-//   })
+  const page = ref(1)
 
-  
+  function changepage() {
+    console.log(page.value);
+    router.push({
+      name: route.name,
+      query: {
+        ...route.query,
+        page: page.value
+      }
+    }),
+  store.dispatch('getLatestNewsFromserver',page.value)
+  // window.screenTop({
+  //   s
+  // })
+  }
 
 </script>
 
@@ -186,18 +207,22 @@
     color: #fff;
     font-size: 9px;
   }
-.show-ordination{
-  display: flex;
-}
-  @media screen and (max-width:960px) {
-  .category{
-    display: none;
-    &.showOrdination{
-      display: block;
-      animation: fadeInDown;
-        animation-duration: 2s;
-    }
+
+  .show-ordination {
+    display: flex;
   }
+
+  @media screen and (max-width:960px) {
+    .category {
+      display: none;
+
+      &.showOrdination {
+        display: block;
+        animation: fadeInDown;
+        animation-duration: 2s;
+      }
+    }
+
     .parent-search {
       display: none;
     }
