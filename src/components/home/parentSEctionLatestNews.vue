@@ -7,26 +7,29 @@
         </v-img>
       </div>
       <div>
-        <span class="all-news" v-if="getlatestnews.length">
-          <router-link :to="`/news/${getlatestnews[0].id}`">
+        <span class="all-news" v-if="news.length">
+          <router-link :to="`/news/${news[0].id}`">
             ...همه اخبار ها
           </router-link>
         </span>
       </div>
     </div>
-    <section-latest-news/>
+    <section-latest-news :news="news"/>
   </div>
 </template>
 
 <script setup>
   import sectionLatestNews from './sectionLatestNews.vue';
-  import {computed } from 'vue';
-import { useStore } from 'vuex';
-const store = useStore();
-store.dispatch('getLatestNewsFromserver')
-const getlatestnews = computed(()=>{
-  return store.getters.getlatestNews
-  })
+//   import {computed } from 'vue';
+// import { useStore } from 'vuex';
+// const store = useStore();
+// store.dispatch('getLatestNewsFromserver')
+// const getlatestnews = computed(()=>{
+//   return store.getters.getlatestNews
+//   })
+defineProps({
+  news:Array
+})
 
 </script>
 <style scoped>

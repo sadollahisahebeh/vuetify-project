@@ -1,7 +1,7 @@
-<!-- <template>
-  <div class="ordination" v-for="item in getcategory" :key="index" :color="color">
+<template>
+  <div class="ordination" v-for="item in getcategory.slice(0,3)" :key="index" :color="color">
     <div class="item-ordination">
-      <router-link :to="`/DetailBlog/category?category_id=${item.id}`" class="link">{{ item.name }} </router-link>
+      <router-link :to="`category_id=${item.id}`" class="link">{{ item.name }} </router-link>
     </div>
     <p>{{item.news_count}}</p>
   </div>
@@ -13,8 +13,12 @@ import {computed } from 'vue';
 import { useStore } from 'vuex';
 const store = useStore();
 store.dispatch('getcategoryFromServer',{num:1})
-const getcategory = computed(()=>{
+let getcategory = computed(()=>{
   return store.getters.getcategory
+  })
+  watch(route ,()=>{
+    store.dispatch('getnewNewsFromserver',route.query.category_id)
+    console.log(route.query.page);
   })
 </script>
 
@@ -41,9 +45,9 @@ a{
     color: #fff;
     font-size: 9px;
   }
-</style> -->
+</style>
 
-<template>
+<!-- <template>
   <v-container>
     <v-row>
       <v-col cols="12" md="4" v-for="item in getarticle" height="400px">
@@ -193,4 +197,4 @@ const getdetailblog = computed(()=>{
 
   }
 
-</style>
+</style> -->

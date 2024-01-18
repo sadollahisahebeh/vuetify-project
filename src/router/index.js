@@ -59,7 +59,7 @@ const routes = [
     ],
   },
   {
-    path: '/news/:id',
+    path: '/news',
     component: () => import('@/layouts/default/Default.vue'),
     children: [
       {

@@ -23,7 +23,7 @@
           <v-col cols="8">
             <div class="subject-school">
               <div>
-                <router-link :to="`/news/${item.id}`"  class="text-school text-black">
+                <router-link to="/news"  class="text-school text-black">
            {{ item.title }}
                 </router-link>
               </div>

@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <div  class="section-latest-news" v-for="item in getlatestnews" :key="item">
+    <div class="section-latest-news" v-for="item in news" :key="item">
         <v-row>
           <div class="show-latest d-flex ga-2 pa-2" >
           <v-col cols="12" md="4" sm="6">
@@ -43,25 +43,21 @@
   </v-container>
 </template>
 <script setup>
-import {computed } from 'vue';
-import { useStore } from 'vuex';
+// import {computed } from 'vue';
+// import { useStore } from 'vuex';
 import {changeDateshamsi}  from '@/assets/moment.js'
 import review from '../review.vue';
 import responsivelatestNews from './responsivelatestNews.vue';
  
-const store = useStore();
-store.dispatch('getLatestNewsFromserver')
-const getlatestnews = computed(()=>{
-  return store.getters.getlatestNews
-  })
+// const store = useStore();
+// store.dispatch('getLatestNewsFromserver')
+// const getlatestnews = computed(()=>{
+//   return store.getters.getlatestNews
+//   })
 
-
-  const p = defineProps({
+defineProps({
     news:Object
   })
-setTimeout(()=>{
-console.log(p.news);
-},2000)
 </script>
 <style scoped>
 a{

@@ -21,7 +21,8 @@ const store = createStore({
       link:[],
       datasetting:[],
       article:[],
-      detailblog:[]
+      detailblog:[],
+      newnews:null
     }
   },
   getters:{
@@ -60,6 +61,9 @@ return state.category
     },
     getdetailblog(state){
       return state.detailblog
+    },
+    getnewNews(state){
+      return state.newnews
     }
 
   },
@@ -99,6 +103,9 @@ state.news = newNews
     },
     setdetailblog(state,newdetail){
       state.detailblog = newdetail
+    },
+    setnewNews(state,newlist){
+      state.newnews=newlist
     }
 
   },
@@ -119,8 +126,8 @@ console.log(res.data.data.news);
 
       })
     },
-    async getLatestNewsFromserver({commit},page){
-   await  axios.get(`news/recent?page=${page}`).then((res)=>{
+    async getLatestNewsFromserver({commit}){
+   await  axios.get('/news/recent').then((res)=>{
 commit('setlatestNews',res.data.data.news)
       }).catch(()=>{
 
@@ -180,7 +187,14 @@ commit('setarticle',res.data.data.articles)
   }).then((res)=>{
 commit('setdetailblog',res.data.data.articles)
   }).catch()
- }
+ },
+ async getnewNewsFromserver({commit},page=1){
+  await  axios.get(`news?page=${page}`).then((res)=>{
+commit('setnewNews',res.data.data.news)
+     }).catch(()=>{
+
+     })
+   },
 
   }
 })

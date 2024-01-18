@@ -17,12 +17,13 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col cols="12" md="8" order="last" order-md="first">
+        <v-col v-if="getlatestNews" cols="12" md="8" order="last" order-md="first">
           <div class="title-more-review">پربازدیدترین ها</div>
-          <section-latest-news class="bg-white rounded-lg mt-7" />
+          <section-latest-news :news="getlatestNews.data" class="bg-white rounded-lg mt-7" />
           <div class="pagination" dir="ltr">
-            <v-pagination :length="3" v-model="page" @update:model-value="changepage" color="#095195"
+            <v-pagination length="3" v-model="page" @update:model-value="changepage" color="#095195"
               prev-icon="mdi-menu-right" next-icon="mdi-menu-left">
+
             </v-pagination>
           </div>
         </v-col>
@@ -40,7 +41,7 @@
               </div>
               <div class="bg-white d-flex pa-4 justify-space-around mt-8 rounded-lg">
                 <div v-for="n in 2">
-                  <category />
+                  <category/>
                 </div>
               </div>
             </div>
@@ -56,23 +57,21 @@
   import sectionLatestNews from '../home/sectionLatestNews.vue';
   import moreVisited from '../home/moreVisited.vue';
   import category from '../category.vue'
-  import axios from 'axios';
   import router from '@/router';
   import { useStore } from 'vuex';
   const store = useStore();
-store.dispatch('getcategoryFromServer',{num:1})
-  import {
-    ref
-  } from 'vue';
-  import {
-    useRoute
-  } from 'vue-router';
+  store.dispatch('getcategoryFromServer',{num:1})
+  import {ref} from 'vue';
+  import {useRoute} from 'vue-router';
+  import { watch } from 'vue';
   const route = useRoute();
-  const data = ref([])
-  axios.get(`/news/${route.params.id}`).then((res) => {
-    data.value = res.data.data.news
-  }).catch()
-
+  import {computed} from 'vue';
+  store.dispatch('getnewNewsFromserver')
+  store.dispatch('getLatestNewsFromserver')
+ 
+  const getlatestNews=computed(()=>{
+    return store.getters.getnewNews
+  })
   const showMore = ref(false);
   const showOrdination = ref(false)
   const items = [{
@@ -88,20 +87,22 @@ store.dispatch('getcategoryFromServer',{num:1})
   const page = ref(1)
 
   function changepage() {
-    console.log(page.value);
     router.push({
       name: route.name,
       query: {
         ...route.query,
         page: page.value
       }
-    }),
-  store.dispatch('getLatestNewsFromserver',page.value)
+    }
+    )
   // window.screenTop({
   //   s
   // })
   }
-
+  watch(route ,()=>{
+    store.dispatch('getnewNewsFromserver',route.query.page)
+    console.log(route.query.page);
+  })
 </script>
 
 <style scoped>
